@@ -38,30 +38,38 @@ bool is_valid(long long card_number)
   return valid;
 }
 
-bool checkCardsDigitsWith(long long card_number, int digits, int shouldBe)
+bool check_number_digits_with(long long card_number, int digits, int shouldBe)
 {
   return card_number / power(digits) == shouldBe;
 }
 
-char* getCardCompany(long long card_number)
+char* get_card_company(long long card_number)
 {
   // check if American Express card
-  if(checkCardsDigitsWith(card_number, 13, 37) || checkCardsDigitsWith(card_number, 13, 34)) return "AMEX";
+  if(check_number_digits_with(card_number, 13, 37) || check_number_digits_with(card_number, 13, 34)) return "AMEX";
   // check if Master Card
-  else if(checkCardsDigitsWith(card_number, 14, 51) || checkCardsDigitsWith(card_number, 14, 52) || checkCardsDigitsWith(card_number, 14, 53) || checkCardsDigitsWith(card_number, 14, 54) ||
-  	checkCardsDigitsWith(card_number, 14, 55)) return "MASTERCARD";
-  else if(checkCardsDigitsWith(card_number, 12, 4) || checkCardsDigitsWith(card_number, 15, 4)) return "VISA";
+  else if(check_number_digits_with(card_number, 14, 51) || check_number_digits_with(card_number, 14, 52) || check_number_digits_with(card_number, 14, 53) || check_number_digits_with(card_number, 14, 54) ||
+    check_number_digits_with(card_number, 14, 55)) return "MASTERCARD";
+  else if(check_number_digits_with(card_number, 12, 4) || check_number_digits_with(card_number, 15, 4)) return "VISA";
   else return "INVALID";
+}
+
+long long take_valid_card_number()
+{
+  long long card_number;
+  do {
+    scanf("%lld", &card_number);
+  } while(card_number <= 0);
+
+  return card_number;
 }
 
 int main()
 {
-  long long card_number;
-
-  scanf("%lld", &card_number);
+  long long card_number = take_valid_card_number();
   
   if(is_valid(card_number))
-    printf("%s\n", getCardCompany(card_number));
+    printf("%s\n", get_card_company(card_number));
   else
     printf("INVALID\n");
 }
